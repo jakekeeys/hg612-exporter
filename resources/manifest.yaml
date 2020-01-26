@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hg612-exporter
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hg612-exporter
+  template:
+    metadata:
+      labels:
+        app: hg612-exporter
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8080'
+        prometheus.io/path: '/prometheus'
+    spec:
+      containers:
+        - image: quay.io/jakekeeys/hg612-exporter:latest
+          imagePullPolicy: Always
+          name: hg612-exporter
+          args:
+            - --host
+            - host
+            - --identifier
+            - id
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: 25Mi
+            limits:
+              memory: 50Mi
