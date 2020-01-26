@@ -886,21 +886,6 @@
             "selected": true,
             "text": "All",
             "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "bt",
-            "value": "bt"
-          },
-          {
-            "selected": false,
-            "text": "tt-0",
-            "value": "tt-0"
-          },
-          {
-            "selected": false,
-            "text": "tt-1",
-            "value": "tt-1"
           }
         ],
         "query": "label_values(dsl_status, identifier)",
@@ -933,26 +918,6 @@
             "selected": true,
             "text": "All",
             "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "farm-modem.yonsea.co.uk",
-            "value": "farm-modem.yonsea.co.uk"
-          },
-          {
-            "selected": false,
-            "text": "10.10.1.1",
-            "value": "10.10.1.1"
-          },
-          {
-            "selected": false,
-            "text": "office-modem.yonsea.co.uk",
-            "value": "office-modem.yonsea.co.uk"
-          },
-          {
-            "selected": false,
-            "text": "living-room-modem.yonsea.co.uk",
-            "value": "living-room-modem.yonsea.co.uk"
           }
         ],
         "query": "label_values(dsl_status, host)",
@@ -987,5 +952,5 @@
     ]
   },
   "timezone": "",
-  "title": "HG612",
+  "title": "HG612"
 }
