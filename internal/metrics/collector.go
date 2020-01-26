@@ -20,11 +20,11 @@ type MetricsCollector struct {
 	dslMetricsCollector    dslMetricsCollector
 }
 
-func New(client hg612.Client, host string, collectIntervalSeconds int) Collector {
+func New(client hg612.Client, host string, identifier string, collectIntervalSeconds int) Collector {
 	return MetricsCollector{
 		collectIntervalSeconds: collectIntervalSeconds,
 		ctx:                    context.Background(),
-		dslMetricsCollector:    newDSLMetricsCollector(client, host),
+		dslMetricsCollector:    newDSLMetricsCollector(client, host, identifier),
 	}
 }
 

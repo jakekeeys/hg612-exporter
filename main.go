@@ -25,6 +25,11 @@ func main() {
 				Required: true,
 			},
 			&cli.StringFlag{
+				Name:     "identifier",
+				Usage:    "the identifier for the line and modem",
+				Required: true,
+			},
+			&cli.StringFlag{
 				Name:  "bind",
 				Usage: "the bind string for the http server ie :8080",
 				Value: ":8080",
@@ -38,7 +43,7 @@ func main() {
 		Action: func(c *cli.Context) error {
 			client := hg612.New(fmt.Sprintf("http://%s", c.String("host")), http.DefaultClient)
 
-			collector := metrics.New(client, c.String("host"), c.Int("interval"))
+			collector := metrics.New(client, c.String("host"), c.String("identifier"), c.Int("interval"))
 			defer collector.Stop()
 			collector.Start()
 
