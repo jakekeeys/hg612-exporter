@@ -34,26 +34,12 @@ GLOBAL OPTIONS:
 ```
 
 ## Build
-go
-```
-go build .
-```
-
-docker 
-```
-docker build .
-```
+* `go build .`
+* `docker build .`
 
 ## Run
-go 
-```
-go run main.go --host <host> --identifier <identifier>
-```
-
-docker 
-```
-docker run docker run quay.io/jakekeeys/hg612-exporter --host <host> --identifier <identifier>
-```
+* `go run main.go --host <host> --identifier <identifier>`
+* `docker run docker run quay.io/jakekeeys/hg612-exporter --host <host> --identifier <identifier>`
 
 ## Metrics
 
