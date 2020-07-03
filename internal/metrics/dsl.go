@@ -261,6 +261,7 @@ func (c dslMetricsCollector) collect() error {
 		return errors.Wrap(err, "error getting dsl status")
 	}
 
+	c.status.Reset()
 	c.status.WithLabelValues(c.host, c.identifier, status.DSLCfg.Status, status.DSLCfg.Modulation, status.DSLCfg.DataPath).Set(1)
 
 	c.upCurrRate.WithLabelValues(c.host, c.identifier).Set(float64(status.DSLCfg.UpCurrRate))
