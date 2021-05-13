@@ -2,21 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/jakekeeys/hg612-exporter/internal/metrics"
-	"github.com/jakekeeys/hg612-exporter/internal/rest"
-	"github.com/jakekeeys/hg612-exporter/pkg/hg612"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
+
+	"github.com/jakekeeys/hg612-exporter/internal/metrics"
+	"github.com/jakekeeys/hg612-exporter/internal/rest"
+	"github.com/jakekeeys/hg612-exporter/pkg/hg612"
 )
 
 func main() {
 	app := &cli.App{
-		Name: "hg612 prometheus exporter",
+		Name:  "hg612 prometheus exporter",
 		Usage: "a metrics exporter for the hg612",
 		Flags: []cli.Flag{
 			&cli.StringFlag{

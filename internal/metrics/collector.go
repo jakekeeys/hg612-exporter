@@ -2,10 +2,12 @@ package metrics
 
 import (
 	"context"
-	"github.com/jakekeeys/hg612-exporter/pkg/hg612"
+	"time"
+
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"time"
+
+	"github.com/jakekeeys/hg612-exporter/pkg/hg612"
 )
 
 type Collector interface {
@@ -33,7 +35,6 @@ func (c MetricsCollector) Collect() {
 	if err != nil {
 		logrus.Error(errors.Wrap(err, "error collecting dsl metrics"))
 	}
-
 }
 
 func (c MetricsCollector) Start() {
