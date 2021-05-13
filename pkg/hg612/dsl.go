@@ -69,6 +69,7 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "error executing dsl status request")
 	}
+	defer resp.Body.Close()
 
 	all, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
