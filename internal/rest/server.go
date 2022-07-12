@@ -2,11 +2,10 @@ package rest
 
 import (
 	"context"
-	"github.com/gorilla/handlers"
+	"net/http"
+
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
-	"net/http"
-	"os"
 )
 
 type Server struct {
@@ -17,11 +16,12 @@ func New(bind string) *Server {
 	var s Server
 
 	r := http.NewServeMux()
+	r.Handle("/metrics", promhttp.Handler())
 	r.Handle("/prometheus", promhttp.Handler())
 
 	server := http.Server{
 		Addr:    bind,
-		Handler: handlers.LoggingHandler(os.Stdout, r),
+		Handler: r,
 	}
 
 	s.httpSrv = &server

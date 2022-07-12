@@ -1,12 +1,15 @@
 package hg612
 
 import (
+	"context"
 	"fmt"
-	"github.com/pkg/errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
+
+	"github.com/pkg/errors"
 )
 
 const DSLPath = "html/status/xdslStatus.asp"
@@ -55,7 +58,9 @@ type DSLStats struct {
 }
 
 func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
-	request, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/%s", c.basePath, DSLPath), nil)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+	request, err := http.NewRequestWithContext(ctx, http.MethodGet, fmt.Sprintf("%s/%s", c.basePath, DSLPath), nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "error creating dsl status request")
 	}
@@ -64,6 +69,7 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "error executing dsl status request")
 	}
+	defer resp.Body.Close()
 
 	all, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

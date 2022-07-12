@@ -1,15 +1,16 @@
 package metrics
 
 import (
-	"github.com/jakekeeys/hg612-exporter/pkg/hg612"
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
+
+	"github.com/jakekeeys/hg612-exporter/pkg/hg612"
 )
 
 type dslMetricsCollector struct {
-	client hg612.Client
-	host   string
+	client     hg612.Client
+	host       string
 	identifier string
 
 	status *prometheus.GaugeVec
@@ -221,8 +222,8 @@ func newDSLMetricsCollector(client hg612.Client, host string, identifier string)
 	)
 
 	return dslMetricsCollector{
-		client: client,
-		host:   host,
+		client:     client,
+		host:       host,
 		identifier: identifier,
 
 		status: status,
@@ -261,6 +262,7 @@ func (c dslMetricsCollector) collect() error {
 		return errors.Wrap(err, "error getting dsl status")
 	}
 
+	c.status.Reset()
 	c.status.WithLabelValues(c.host, c.identifier, status.DSLCfg.Status, status.DSLCfg.Modulation, status.DSLCfg.DataPath).Set(1)
 
 	c.upCurrRate.WithLabelValues(c.host, c.identifier).Set(float64(status.DSLCfg.UpCurrRate))
