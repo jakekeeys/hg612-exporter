@@ -89,7 +89,7 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 
 	var dslCfgRawInts []int64
 	for i := 4; i < 16; i++ {
-		atoi, err := strconv.ParseInt(dslCfgRaw[i], 0, 64)
+		atoi, err := strconv.ParseInt(dslCfgRaw[i], 10, 64)
 		if err != nil {
 			return nil, errors.Wrap(err, "error converting numeric dslcfg value")
 		}
@@ -124,7 +124,7 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 
 	var dslStatsRawInts []int64
 	for i := 1; i < 13; i++ {
-		atoi, err := strconv.PatseInt(dslStatsRaw[i], 0 ,64)
+		atoi, err := strconv.ParseInt(dslStatsRaw[i], 10 ,64)
 		if err != nil {
 			return nil, errors.Wrap(err, "error converting numeric dsl stats value")
 		}
@@ -148,12 +148,12 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 		UpFEC2:   dslStatsRawInts[11],
 	}
 
-	dslUpTime, err := strconv.ParseInt(strings.TrimSuffix(strings.TrimPrefix(lines[2], "var DslUpTime = \""), "\";"), 0, 64)
+	dslUpTime, err := strconv.ParseInt(strings.TrimSuffix(strings.TrimPrefix(lines[2], "var DslUpTime = \""), "\";"), 10, 64)
 	if err != nil {
 		return nil, errors.Wrap(err, "error converting dsl uptime")
 	}
 
-	time, err := strconv.ParseInt(strings.TrimSuffix(strings.TrimPrefix(lines[3], "var time = "), ";"), 0, 64)
+	time, err := strconv.ParseInt(strings.TrimSuffix(strings.TrimPrefix(lines[3], "var time = "), ";"), 10, 64)
 	if err != nil {
 		return nil, errors.Wrap(err, "error converting dsl time")
 	}
