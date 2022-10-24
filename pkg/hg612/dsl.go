@@ -17,8 +17,8 @@ const DSLPath = "html/status/xdslStatus.asp"
 type VDSLStatus struct {
 	DSLCfg    DSLCfg
 	DSLStats  DSLStats
-	DSLUpTime int
-	Time      int
+	DSLUpTime int64
+	Time      int64
 }
 
 type DSLCfg struct {
@@ -26,35 +26,35 @@ type DSLCfg struct {
 	Status          string
 	Modulation      string
 	DataPath        string
-	UpCurrRate      int
-	DownCurrRate    int
-	UpCurrRate2     int
-	DownCurrRate2   int
-	UpMaxRate       int
-	DownMaxRate     int
-	UpSNR           int
-	DownSNR         int
-	UpAttenuation   int
-	DownAttenuation int
-	UpPower         int
-	DownPower       int
+	UpCurrRate      int64
+	DownCurrRate    int64
+	UpCurrRate2     int64
+	DownCurrRate2   int64
+	UpMaxRate       int64
+	DownMaxRate     int64
+	UpSNR           int64
+	DownSNR         int64
+	UpAttenuation   int64
+	DownAttenuation int64
+	UpPower         int64
+	DownPower       int64
 	TrafficType     string
 }
 
 type DSLStats struct {
 	Domain   string
-	DownHEC  int
-	UpHEC    int
-	DownCRC  int
-	UpCRC    int
-	DownFEC  int
-	UpFEC    int
-	DownHEC2 int
-	UpHEC2   int
-	DownCRC2 int
-	UpCRC2   int
-	DownFEC2 int
-	UpFEC2   int
+	DownHEC  int64
+	UpHEC    int64
+	DownCRC  int64
+	UpCRC    int64
+	DownFEC  int64
+	UpFEC    int64
+	DownHEC2 int64
+	UpHEC2   int64
+	DownCRC2 int64
+	UpCRC2   int64
+	DownFEC2 int64
+	UpFEC2   int64
 }
 
 func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
@@ -87,9 +87,9 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 		return nil, errors.New("unexpected dslcfg length")
 	}
 
-	var dslCfgRawInts []int
+	var dslCfgRawInts []int64
 	for i := 4; i < 16; i++ {
-		atoi, err := strconv.Atoi(dslCfgRaw[i])
+		atoi, err := strconv.ParseInt(dslCfgRaw[i], 0, 64)
 		if err != nil {
 			return nil, errors.Wrap(err, "error converting numeric dslcfg value")
 		}
@@ -122,9 +122,9 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 		return nil, errors.New("unexpected dslstats length")
 	}
 
-	var dslStatsRawInts []int
+	var dslStatsRawInts []int64
 	for i := 1; i < 13; i++ {
-		atoi, err := strconv.Atoi(dslStatsRaw[i])
+		atoi, err := strconv.PatseInt(dslStatsRaw[i], 0 ,64)
 		if err != nil {
 			return nil, errors.Wrap(err, "error converting numeric dsl stats value")
 		}
@@ -148,12 +148,12 @@ func (c HG612Client) DSLStatus() (*VDSLStatus, error) {
 		UpFEC2:   dslStatsRawInts[11],
 	}
 
-	dslUpTime, err := strconv.Atoi(strings.TrimSuffix(strings.TrimPrefix(lines[2], "var DslUpTime = \""), "\";"))
+	dslUpTime, err := strconv.ParseInt(strings.TrimSuffix(strings.TrimPrefix(lines[2], "var DslUpTime = \""), "\";"), 0, 64)
 	if err != nil {
 		return nil, errors.Wrap(err, "error converting dsl uptime")
 	}
 
-	time, err := strconv.Atoi(strings.TrimSuffix(strings.TrimPrefix(lines[3], "var time = "), ";"))
+	time, err := strconv.ParseInt(strings.TrimSuffix(strings.TrimPrefix(lines[3], "var time = "), ";"), 0, 64)
 	if err != nil {
 		return nil, errors.Wrap(err, "error converting dsl time")
 	}
